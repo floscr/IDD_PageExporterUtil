@@ -424,7 +424,7 @@ for(currentDoc = 0; currentDoc < printINFO.length; currentDoc++){
 
 }
 
-byeBye("The requested pages are done being exported.",true); // Last line of script execution
+// byeBye("The requested pages are done being exported.",true); // Last line of script execution
 
 /*******************************************/
 /*         Operational Functions           */
@@ -506,13 +506,13 @@ function outputPages(pgStart, pgEnd, currentINFO){
 					pgRange = currentINFO.pageRangeArray[currentPage];
 
 				// Do the actual export:
-				exportPage(currentINFO, pgRange);
+				exportPage(currentINFO, pgRange, currentPage);
 
 				// Update progress bar if available
 				if(peuINFO.doProgressBar)
 					advanceBar();
 
-				currentPage++;
+				currentPage = currentPage + 2;
 			} while(currentPage <= numericallyLastPage);
 		}
 	}
@@ -521,7 +521,17 @@ function outputPages(pgStart, pgEnd, currentINFO){
 /*
  * Export the page
  */
-function exportPage(currentINFO, pgRange){
+function exportPage(currentINFO, pgRange, currentPage){
+	var nextpage = currentPage + 1;
+
+	pgRange = nextpage + "," + currentPage;
+
+	if (currentPage === 0) {
+		pgRange = "1,2";
+	}
+
+	$.writeln(pgRange);
+
 	var outFile = currentINFO.outDir + currentINFO.outfileName;
 	switch (currentINFO.formatType){
 		case 0: // PostScript Formatting
