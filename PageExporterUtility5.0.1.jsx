@@ -11,7 +11,7 @@
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
-var peuINFO = new Array();
+var peuINFO = [];
 peuINFO["csVersion"] = parseInt(app.version);
 // Save the old interaction level
 if(peuINFO.csVersion == 3) { //CS1
@@ -1269,6 +1269,10 @@ function createMainDialog (docName, thisNum, endNum){
 						doSpreads = checkboxControls.add({staticLabel:"As Spreads", checkedState:peuINFO.doSpreadsON} );
 					with (dialogRows.add() )
 						oneFile = checkboxControls.add({staticLabel:"Send Entire File At Once (PS+PDF only)", checkedState:peuINFO.doOneFile});
+					with (dialogRows.add() )
+						staticTexts.add({staticLabel:"Pages per PDF"} );
+					with (borderPanels.add() )
+						outputDirs = dropdowns.add({stringList:peuINFO.outDirNameArray , minWidth:204, selectedIndex:peuINFO.defaultDir} );
 				}
 			}
 			with (dialogRows.add() )
@@ -1602,7 +1606,7 @@ function peuInit(){
 	peuINFO["addPSextention"] = 1;
 	peuINFO["defaultJPEGquality"] = 0;
 	peuINFO["defaultJPEGrender"] = 0;
-	peuINFO["sayCancel"] = 1;
+	peuINFO["sayCancel"] = 0;
 	peuINFO["subType"] = 1;
 	peuINFO["layersON"]  = 0;
 	peuINFO["layerBeforeON"] = 0;
@@ -1875,7 +1879,7 @@ function makePrefsDlog(){
 					}
 					with (dialogRows.add() ){
 						staticTexts.add({staticLabel:"Alert on Cancel"} );
-						prefsItems["changeShowCancel"] = dropdowns.add({stringList:["No","Yes"], selectedIndex:peuINFO.sayCancel} );
+						prefsItems["changeShowCancel"] = dropdowns.add({stringList:["Yes","No"], selectedIndex:peuINFO.sayCancel} );
 					}
 					with (dialogRows.add() ){
 						staticTexts.add({staticLabel:"Lot Naming Type"} );
